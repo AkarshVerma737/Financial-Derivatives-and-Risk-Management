@@ -1,0 +1,64 @@
+To Extract all earnings from Simulation:
+
+Sub ExtractData()
+    Dim wsSource As Worksheet
+    Dim wsDest As Worksheet
+    Dim i As Integer, j As Integer, k as Integer
+    
+    Set wsSource = ThisWorkbook.Sheets("Simulations")
+    Set wsDest = ThisWorkbook.Sheets("Earnings")
+    
+    
+    For i = 1 To 10
+        For j = 1 To 1000
+	    For k = 1 to 12
+            	wsDest.Cells(j+1, i).Value = wsSource.Cells(3 + (i - 1) * 16 + k , 9*j).Value
+	    Next k
+        Next j
+    Next i
+End Sub
+
+
+To Find Yearly Earnings:
+
+Sub ExtractData()
+    Dim wsSource As Worksheet
+    Dim wsDest As Worksheet
+    Dim sum as Double
+    Dim i As Integer, j As Integer, k as Integer
+    
+    Set wsSource = ThisWorkbook.Sheets("Earnings")
+    Set wsDest = ThisWorkbook.Sheets("Yearly Earnings")
+    
+    
+    For i = 1 To 10
+        For j = 1 To 1000
+	    sum = 0
+	    For k = 1 to 12
+            	sum = sum + wsSource.Cells(12*(j-1) + k +1 , i).Value
+	    Next k
+	wsDest.Cells(j,i)=sum
+        Next j
+    Next i
+End Sub
+
+
+For Extracting May data for all (10 Simulation, 1000 paths):
+
+Sub ExtractData()
+    Dim wsSource As Worksheet
+    Dim wsDest As Worksheet
+    Dim i As Integer, j As Integer
+    
+    Set wsSource = ThisWorkbook.Sheets("Simulations")
+    Set wsDest = ThisWorkbook.Sheets("May Data")
+    
+    
+    For i = 1 To 10
+        For j = 1 To 1000
+                wsDest.Cells(j + 2, 3 * (i - 1) + 1).Value = wsSource.Cells(3 + (i - 1) * 16 + 1, 9 + 9 * (j - 1)).Value    'Earnings
+                wsDest.Cells(j + 2, 3 * (i - 1) + 2).Value = wsSource.Cells(3 + (i - 1) * 16 + 1, 6 + 9 * (j - 1)).Value    'Jet Kerosene
+                wsDest.Cells(j + 2, 3 * (i - 1) + 3).Value = wsSource.Cells(3 + (i - 1) * 16 + 1, 7 + 9 * (j - 1)).Value    'AUD/USD
+        Next j
+    Next i
+End Sub
